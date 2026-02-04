@@ -18,12 +18,6 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-    }
-
-    // Changed to return DTOs
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
                 .map(productMapper::toDTO)
@@ -39,7 +33,6 @@ public class ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
         if (productRepository.existsByName(productDTO.getName())) {
             throw new RuntimeException("Product with this name already exists");
-            // Or create a generic ResourceAlreadyExistsException
         }
         Product product = productMapper.toEntity(productDTO);
         Product savedProduct = productRepository.save(product);
