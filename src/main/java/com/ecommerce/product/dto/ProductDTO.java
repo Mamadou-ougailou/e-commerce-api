@@ -1,4 +1,4 @@
-package com.ecommerce.dto;
+package com.ecommerce.product.dto;
 
 import java.util.Date;
 

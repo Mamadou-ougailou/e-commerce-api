@@ -1,11 +1,11 @@
-package com.ecommerce.repositories;
+package com.ecommerce.product.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.ecommerce.model.Product;
+import com.ecommerce.product.model.Product;
 
 import java.util.List;
 

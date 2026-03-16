@@ -32,14 +32,14 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new EmailAlreadyExistsException(request.getEmail());
+        if (userRepository.existsByEmail(request.email())) {
+            throw new EmailAlreadyExistsException(request.email());
         }
 
         User user = new User(
-                request.getUsername(),
-                request.getEmail(),
-                passwordEncoder.encode(request.getPassword()));
+                request.username(),
+                request.email(),
+                passwordEncoder.encode(request.password()));
 
         userRepository.save(user);
 
@@ -50,10 +50,10 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()));
+                        request.email(),
+                        request.password()));
 
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String token = jwtService.generateToken(user);

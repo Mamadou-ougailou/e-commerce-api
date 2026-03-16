@@ -1,4 +1,4 @@
-package com.ecommerce.controller;
+package com.ecommerce.product.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ecommerce.dto.ProductDTO;
-import com.ecommerce.service.ProductService;
+import com.ecommerce.product.dto.ProductDTO;
+import com.ecommerce.product.service.ProductService;
 
 @RestController
 @RequestMapping("api/admin/products")

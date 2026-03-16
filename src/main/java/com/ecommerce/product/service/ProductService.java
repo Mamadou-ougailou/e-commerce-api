@@ -1,10 +1,10 @@
-package com.ecommerce.service;
+package com.ecommerce.product.service;
 
-import com.ecommerce.model.Product;
-import com.ecommerce.dto.ProductDTO;
+import com.ecommerce.product.model.Product;
+import com.ecommerce.product.dto.ProductDTO;
+import com.ecommerce.product.mapper.ProductMapper;
 import com.ecommerce.exception.ResourceNotFoundException;
-import com.ecommerce.mapper.ProductMapper;
-import com.ecommerce.repositories.ProductRepository;
+import com.ecommerce.product.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
