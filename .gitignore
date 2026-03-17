@@ -1,5 +1,4 @@
 application.properties
-application-prod.properties
 
 HELP.md
 target/
