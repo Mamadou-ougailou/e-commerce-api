@@ -6,6 +6,8 @@ services:
       POSTGRES_DB: ecommerce
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      JWT_SECRET: dGhpc0lzQVZlcnlMb25nU2VjcmV0S2V5Rm9ySldUU2lnbmluZzEyMzQ1Njc4OQ==
+      JWT_EXPIRATION: 8640000 
     ports:
       - "5432:5432"
     volumes:
