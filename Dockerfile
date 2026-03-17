@@ -11,4 +11,10 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+ENTRYPOINT ["java", \
+  "-Dspring.profiles.active=prod", \
+  "-Dspring.datasource.url=${DB_URL}", \
+  "-Dspring.datasource.username=${DATABASE_USERNAME}", \
+  "-Dspring.datasource.password=${DATABASE_PASSWORD}", \
+  "-Djwt.secret=${JWT_SECRET}", \
+  "-jar", "app.jar"]
