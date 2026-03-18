@@ -9,7 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,7 +33,6 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-
     steps:
       - name: Deploy to Render
         run: |
@@ -42,8 +40,9 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json"
 
-keep-alive:
-runs-on: ubuntu-latest
-steps:
-  - name: Ping Render
-    run: curl https://ecommerce-api-yzvp.onrender.com.onrender.com/actuator/health
+  keep-alive:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render
+        run: curl https://ecommerce-api-yzvp.onrender.com/actuator/health
