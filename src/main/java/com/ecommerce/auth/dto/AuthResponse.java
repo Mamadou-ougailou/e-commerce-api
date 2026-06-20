@@ -1,9 +1,9 @@
-// AuthResponse.java
 package com.ecommerce.auth.dto;
 
 public record AuthResponse(
-    
-    String token,
-    String username,
+    String accessToken,
+    String refreshToken,
+    String firstName,
+    String lastName,
     String email
 ) {}

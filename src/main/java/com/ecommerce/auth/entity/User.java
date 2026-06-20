@@ -1,52 +1,105 @@
 package com.ecommerce.auth.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
+
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Profil fields
     @Column(nullable = false)
-    private String username;
+    @NotBlank
+    private String firstName;
+
+    @Column(nullable = false)
+    @NotBlank
+    private String lastName;
+
+    @Column(unique = true)
+    private String phoneNumber;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
+    @Email
     private String email;
 
     @Column(nullable = false)
+    @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
+
+    // Adress fields
+    @Column
+    private String country;
+
+    @Column
+    private String city;
+
+    @Column
+    private String address;
+
+    @Column
+    private String zipCode;
+
+    // Audit fields
+    @Column
+    private Instant lastLoginAt;
+
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    private Instant createdAt;
+
+    @Column(nullable = false)
+    @UpdateTimestamp
+    private Instant updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.USER;
 
-    @Column(nullable = false, updatable = false)
-    private Date createdAt;
+    @Column
+    @Builder.Default
+    private boolean isActive = true;
+
+    @Column
+    @Builder.Default
+    private boolean isEmailVerified = false;
+
+    @Column
+    private Instant passwordChangedAt;
+
+    
 
     public enum Role {
         USER, ADMIN
-    }
-
-    public User() {
-        this.createdAt = new Date();
-        this.role = Role.USER;
-    }
-
-    public User(String username, String email, String password) {
-        this();
-        this.username = username;
-        this.email = email;
-        this.password = password;
     }
 
     // ── UserDetails implementation ──
@@ -66,6 +119,9 @@ public class User implements UserDetails {
         return email; // Spring Security uses this for authentication lookups
     }
 
+    public String getDisplayName() {
+        return firstName + " " + lastName;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -83,52 +139,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 
-    // ── Getters & Setters ──
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDisplayName() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-}
+   }
